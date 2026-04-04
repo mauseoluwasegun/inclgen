@@ -6,7 +6,7 @@ import { betterAuthComponent } from "./auth";
 import { anonymous } from "better-auth/plugins";
 import { betterAuth } from "better-auth";
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "https://inclgen.vercel.app";
 
 type GenericCtx = any;
 
@@ -31,7 +31,7 @@ const createOptions = (ctx: GenericCtx) => ({
     },
   },
   trustedOrigins: [
-    "http://localhost:3000",
+    "https://inclgen.vercel.app",
   ],
   plugins: [
     anonymous({
