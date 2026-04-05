@@ -37,17 +37,17 @@ const UserInfo = ({ name, email, image }: Props) => {
   const { isMobile } = useSidebar();
 
   const signOut = async () => {
-    if (!authClient) return;
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          window.location.replace("/");
-        },
-        onError: (error) => {
-          console.log("Couldn't sign out", error);
-        },
-      },
-    });
+    if (!authClient) {
+      window.location.href = "/auth";
+      return;
+    }
+    try {
+      await authClient.signOut();
+      window.location.href = "/auth";
+    } catch (error) {
+      console.error("Sign out error:", error);
+      window.location.href = "/auth";
+    }
   };
 
   return (
