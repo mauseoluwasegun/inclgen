@@ -1,9 +1,11 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const AuthGate = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -22,16 +24,16 @@ const AuthGate = ({ children }: { children: React.ReactNode }) => {
 
         if (!cancelled) {
           if (!session.data?.user) {
-            console.log("Signing in anonymously");
-            await authClient.signIn.anonymous({});
-            await authClient.getSession();
+            console.log("No session - redirecting to auth");
+            router.push("/auth");
+            return;
           }
           setReady(true);
         }
       } catch (error: any) {
         console.error("Auth initialization error:", error);
         if (!cancelled) {
-          setReady(true);
+          router.push("/auth");
         }
       }
     };
@@ -41,7 +43,7 @@ const AuthGate = ({ children }: { children: React.ReactNode }) => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [router]);
 
   if (!ready) {
     return (
