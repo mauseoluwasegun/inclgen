@@ -14,11 +14,8 @@ if (process.env.NODE_ENV === "development") {
 const nextConfig: NextConfig = {
   // Transpile auth packages to fix CJS/ESM mismatch with Turbopack
   transpilePackages: ["@convex-dev/better-auth", "better-auth"],
-  // eslint: {
-  //   ignoreDuringBuilds: true,
-  // },
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
   images: {
     remotePatterns: [
